@@ -19,19 +19,28 @@ export class LoginService {
   ) {}
 
   async signIn(signInDto: SignInDto) {
+    // Vérification quye l'email existe en db
     const user = await this.usersRepository.findOneBy({
       email: signInDto.email,
     });
     if (!user) {
-      throw new UnauthorizedException('User does not exists');
+      throw new UnauthorizedException('Adresse email inconnue');
     }
+
+    // Vérification du mot de passe
     const isEqual = await this.hashingService.compare(
       signInDto.password,
       user.password,
     );
     if (!isEqual) {
-      throw new UnauthorizedException('Password does not match');
+      throw new UnauthorizedException('Mot de passe invalide');
     }
+
+    if (user && user.isActive === false) {
+      throw new UnauthorizedException('Compte bloqué');
+    }
+
+    // création du token
     const accessToken = await this.jwtService.signAsync(
       {
         sub: user.id,
@@ -45,6 +54,8 @@ export class LoginService {
         expiresIn: this.jwtConfiguration.accessTokenTtl,
       },
     );
+
+    // envois du token
     return {
       accessToken,
     };

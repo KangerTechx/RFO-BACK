@@ -1,5 +1,12 @@
+import { Part } from 'src/parts/entities/part.entity';
 import { UserInstru } from 'src/user-instru/entities/user-instru.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Instrument {
@@ -11,4 +18,7 @@ export class Instrument {
 
   @OneToMany((type) => UserInstru, (userInstru) => userInstru.instrument)
   userInstru: UserInstru[];
+
+  @ManyToMany((type) => Part, (part) => part.instruments)
+  parts: Part[];
 }

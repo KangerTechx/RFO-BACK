@@ -37,8 +37,11 @@ export class User {
   @Column({ nullable: true })
   avatar: string;
 
-  @Column({ default: false })
+  @Column()
   isMember: boolean;
+
+  @Column()
+  isActive: boolean;
 
   @Column({ nullable: true })
   startMusicDate: Date;

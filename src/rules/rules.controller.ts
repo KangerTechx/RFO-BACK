@@ -27,16 +27,16 @@ export class RulesController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.rulesService.findOne(+id);
+    return this.rulesService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateRuleDto: UpdateRuleDto) {
-    return this.rulesService.update(+id, updateRuleDto);
+    return this.rulesService.update(id, updateRuleDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.rulesService.remove(+id);
+    return this.rulesService.remove(id);
   }
 }

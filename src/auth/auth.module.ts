@@ -25,10 +25,10 @@ import { AccessTokenGuard } from './authentication/guards/access-token.guard';
       provide: HashingService,
       useClass: BcryptService,
     },
-    {
+    /*{
       provide: APP_GUARD,
       useClass: AuthenticationGuard,
-    },
+    },*/
     AccessTokenGuard,
     AuthenticationService,
     LoginService,

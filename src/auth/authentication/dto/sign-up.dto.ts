@@ -42,6 +42,9 @@ export class SignUpDto {
   @IsBoolean()
   readonly isMember: boolean;
 
+  @IsBoolean()
+  readonly isActive: boolean;
+
   @IsOptional()
   readonly startMusicDate: Date;
 }
