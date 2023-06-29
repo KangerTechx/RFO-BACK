@@ -14,17 +14,18 @@ export class InstrumentsService {
 
   // Ajouter un instrument
   create(createInstrumentDto: CreateInstrumentDto) {
-    try {
-      const instrument = this.instrumentRepository.create(createInstrumentDto);
-      return this.instrumentRepository.save(instrument);
-    } catch (e) {
-      console.log(e);
-    }
+    const instrument = this.instrumentRepository.create(createInstrumentDto);
+    return this.instrumentRepository.save(instrument);
   }
 
   //Trouver tous les instruments
   findAll() {
-    return this.instrumentRepository.find();
+    return this.instrumentRepository.find({
+      relations: {
+        parts: true,
+        userInstru: true,
+      },
+    });
   }
 
   // Trouver un instrument

@@ -7,7 +7,7 @@ import {
   MinLength,
 } from 'class-validator';
 
-export class SignUpDto {
+export class CreateUserDto {
   @IsEmail()
   @IsNotEmpty()
   readonly email: string;

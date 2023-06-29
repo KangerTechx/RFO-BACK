@@ -8,6 +8,7 @@ import {
 } from 'class-validator';
 
 export class CreateBookDto {
+  [x: string]: any;
   @IsString()
   @IsNotEmpty()
   @MinLength(4)
@@ -28,4 +29,13 @@ export class CreateBookDto {
   @IsOptional()
   @IsBoolean()
   isSelected: boolean;
+
+  @IsString({ each: true })
+  readonly compositors: string[];
+
+  @IsString({ each: true })
+  readonly arrangors: string[];
+
+  @IsString({ each: true })
+  readonly styles: string[];
 }

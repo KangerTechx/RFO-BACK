@@ -15,19 +15,14 @@ import { UpdateUserInstruDto } from './dto/update-user-instru.dto';
 export class UserInstruController {
   constructor(private readonly userInstruService: UserInstruService) {}
 
-  @Post()
-  create(@Body() createUserInstruDto: CreateUserInstruDto) {
-    return this.userInstruService.create(createUserInstruDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.userInstruService.findAll();
+  @Post(':id')
+  create(@Body() createUserInstruDto: CreateUserInstruDto, @Param('id') id: string) {
+    return this.userInstruService.create(createUserInstruDto, id);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userInstruService.findOne(+id);
+  findAll(@Param('id') id: string) {
+    return this.userInstruService.findAll(id);
   }
 
   @Patch(':id')

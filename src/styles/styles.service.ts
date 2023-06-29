@@ -24,13 +24,20 @@ export class StylesService {
 
   // Find all Styles
   findAll() {
-    return this.styleRepository.find();
+    return this.styleRepository.find({
+      relations: {
+        books: true,
+      },
+    });
   }
 
   // Find one style
   async findOne(id: string) {
     const style = await this.styleRepository.findOne({
       where: { id: +id },
+      relations: {
+        books: true,
+      },
     });
 
     if (!style) {

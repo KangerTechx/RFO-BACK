@@ -18,12 +18,19 @@ export class RulesService {
   }
 
   findAll() {
-    return this.ruleRepository.find();
+    return this.ruleRepository.find({
+      relations: {
+        users: true,
+      },
+    });
   }
 
   async findOne(id: string) {
     const rule = await this.ruleRepository.findOne({
       where: { id: +id },
+      relations: {
+        users: true,
+      },
     });
 
     if (!rule) {

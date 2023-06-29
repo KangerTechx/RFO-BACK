@@ -22,13 +22,20 @@ export class CompositorsService {
 
   // Find All compositors
   findAll() {
-    return this.compositorRepository.find();
+    return this.compositorRepository.find({
+      relations: {
+        books: true,
+      },
+    });
   }
 
   //find one compositor
   async findOne(id: string) {
     const compositor = await this.compositorRepository.findOne({
       where: { id: +id },
+      relations: {
+        books: true,
+      },
     });
 
     if (!compositor) {

@@ -9,12 +9,14 @@ import { User } from '../../users/entities/user.entity';
 import { HashingService } from '../hashing/hashing.service';
 import { SignUpDto } from './dto/sign-up.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Rule } from 'src/rules/entities/rule.entity';
 
 @Injectable()
 export class AuthenticationService {
   constructor(
     @InjectRepository(User) private readonly usersRepository: Repository<User>,
     private readonly hashingService: HashingService,
+    @InjectRepository(Rule) private readonly ruleRepository: Repository<Rule>,
   ) {}
 
   // Ajouter un utilisateur
@@ -43,13 +45,30 @@ export class AuthenticationService {
 
   //Modifier un utilisateur
   async update(id: string, updateUserDto: UpdateUserDto) {
+    const rules =
+      updateUserDto.rules &&
+      (await Promise.all(
+        updateUserDto.rules.map((name) => this.preloadRuleByName(name)),
+      ));
     const user = await this.usersRepository.preload({
       id: +id,
       ...updateUserDto,
+      rules,
     });
     if (!user) {
       throw new NotFoundException(`User ${id} not found`);
     }
     return this.usersRepository.save(user);
+  }
+
+  // Preload rules
+  private async preloadRuleByName(name: string): Promise<Rule> {
+    const existingRule = await this.ruleRepository.findOne({
+      where: { name },
+    });
+    if (existingRule) {
+      return existingRule;
+    }
+    return this.ruleRepository.create({ name });
   }
 }

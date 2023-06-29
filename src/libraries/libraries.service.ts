@@ -14,17 +14,17 @@ export class LibrariesService {
 
   // ADD A Library
   create(createLibraryDto: CreateLibraryDto) {
-    try {
-      const library = this.libraryRepository.create(createLibraryDto);
-      return this.libraryRepository.save(library);
-    } catch (e) {
-      console.log(e);
-    }
+    const library = this.libraryRepository.create(createLibraryDto);
+    return this.libraryRepository.save(library);
   }
 
   // Find all libraries
   findAll() {
-    return this.libraryRepository.find();
+    return this.libraryRepository.find({
+      relations: {
+        books: true,
+      },
+    });
   }
 
   // Find one library
