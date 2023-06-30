@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserInstruDto } from './dto/create-user-instru.dto';
-import { UpdateUserInstruDto } from './dto/update-user-instru.dto';
 import { Instrument } from 'src/instruments/entities/instrument.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -19,17 +18,18 @@ export class UserInstruService {
   ) {}
 
   // Add a new user instrument
-  async create(createUserInstruDto: CreateUserInstruDto, id) {
+  async create(createUserInstruDto: CreateUserInstruDto, userId, instruId) {
     const user = await this.userRepository.findOne({
       where: {
-        id: +id,
+        id: userId,
       },
     });
-    const instrument = await Promise.apply(
-      createUserInstruDto.instrument.map((name) => {
-        this.preloadInstrumentByName(name);
-      }),
-    );
+    const instrument = await this.instrumentRepository.findOne({
+      where: {
+        id: instruId,
+      },
+    });
+
     const userInstru = this.userInstruRepository.create({
       ...createUserInstruDto,
       user,
@@ -56,22 +56,12 @@ export class UserInstruService {
     });
   }
 
-  update(id: number, updateUserInstruDto: UpdateUserInstruDto) {
-    return `This action updates a #${id} userInstru`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} userInstru`;
-  }
-
-  // Preload arrangors
-  private async preloadInstrumentByName(name: string): Promise<Instrument> {
-    const existingInstrument = await this.instrumentRepository.findOne({
-      where: { name },
+  async remove(id: string) {
+    const userInstru = await this.userInstruRepository.findOne({
+      where: {
+        id: +id,
+      },
     });
-    if (existingInstrument) {
-      return existingInstrument;
-    }
-    return this.instrumentRepository.create({ name });
+    return this.userInstruRepository.remove(userInstru);
   }
 }
