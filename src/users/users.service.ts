@@ -36,6 +36,7 @@ export class UsersService {
         rules: true,
         userInstru: true,
       },
+      order: { lastName: 'ASC' },
     });
   }
 
@@ -64,7 +65,6 @@ export class UsersService {
     const user = await this.userRepository.preload({
       id: +id,
       ...updateUserDto,
-      password: await this.hashingService.hash(updateUserDto.password),
       rules,
     });
     if (!user) {

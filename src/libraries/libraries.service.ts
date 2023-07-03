@@ -24,6 +24,7 @@ export class LibrariesService {
       relations: {
         books: true,
       },
+      order: { id: 'ASC' },
     });
   }
 

@@ -23,9 +23,9 @@ export class UserInstruController {
     return this.userInstruService.create(createUserInstruDto, userId, instruId);
   }
 
-  @Get(':id')
-  findAll(@Param('id') id: string) {
-    return this.userInstruService.findAll(id);
+  @Get()
+  findAll() {
+    return this.userInstruService.findAll();
   }
 
   @Delete(':id')

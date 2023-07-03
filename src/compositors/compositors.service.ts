@@ -26,6 +26,7 @@ export class CompositorsService {
       relations: {
         books: true,
       },
+      order: { name: 'ASC' },
     });
   }
 

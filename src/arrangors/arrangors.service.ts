@@ -24,7 +24,9 @@ export class ArrangorsService {
 
   // Find all arrangors
   findAll() {
-    return this.arrangorRepository.find();
+    return this.arrangorRepository.find({
+      order: { name: 'ASC' },
+    });
   }
 
   // Find an arrangor

@@ -28,6 +28,7 @@ export class StylesService {
       relations: {
         books: true,
       },
+      order: { name: 'ASC' },
     });
   }
 

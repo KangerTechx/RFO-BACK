@@ -27,7 +27,7 @@ import { Rule } from 'src/rules/entities/rule.entity';
       useClass: BcryptService,
     },
     /*{
-      provide: APP_GUARD,
+      provide: APP_GUARD, // Ici
       useClass: AuthenticationGuard,
     },*/
     AccessTokenGuard,

@@ -39,6 +39,25 @@ export class PartsService {
     return this.partRepository.save(part);
   }
 
+  async findAllBookParts(id: string) {
+    const book = await this.bookRepository.findOne({
+      where: {
+        id: +id,
+      },
+      order: { id: 'ASC' },
+    });
+
+    return this.partRepository.find({
+      relations: {
+        book: true,
+        instruments: true,
+      },
+      where: {
+        book: book,
+      },
+    });
+  }
+
   // Find All Parts
   findAll() {
     return this.partRepository.find({

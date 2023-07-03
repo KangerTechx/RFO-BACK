@@ -40,3 +40,13 @@ export class PartsController {
     return this.partsService.remove(id);
   }
 }
+
+@Controller('book-parts')
+export class bookPartsController {
+  constructor(private readonly partsService: PartsService) {}
+
+  @Get(':id')
+  findAll(@Param('id') id: string) {
+    return this.partsService.findAllBookParts(id);
+  }
+}

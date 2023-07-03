@@ -39,16 +39,8 @@ export class UserInstruService {
   }
 
   // find All Instrument for a User
-  async findAll(id: string) {
-    const user = await this.userRepository.findOne({
-      where: {
-        id: +id,
-      },
-    });
-    return this.userInstruRepository.find({
-      where: {
-        user: user,
-      },
+  async findAll() {
+    return await this.userInstruRepository.find({
       relations: {
         user: true,
         instrument: true,

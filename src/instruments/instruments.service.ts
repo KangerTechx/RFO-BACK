@@ -13,8 +13,10 @@ export class InstrumentsService {
   ) {}
 
   // Ajouter un instrument
-  create(createInstrumentDto: CreateInstrumentDto) {
-    const instrument = this.instrumentRepository.create(createInstrumentDto);
+  async create(createInstrumentDto: CreateInstrumentDto) {
+    const instrument = await this.instrumentRepository.create(
+      createInstrumentDto,
+    );
     return this.instrumentRepository.save(instrument);
   }
 
@@ -24,6 +26,9 @@ export class InstrumentsService {
       relations: {
         parts: true,
         userInstru: true,
+      },
+      order: {
+        id: 'ASC',
       },
     });
   }

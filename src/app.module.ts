@@ -27,7 +27,9 @@ import { PartsModule } from './parts/parts.module';
       autoLoadEntities: true, // models will be loaded automatically
       synchronize: true, // your entities will be synced with the database(recommended: disable in prod)
     }),
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     UsersModule,
     RulesModule,
     InstrumentsModule,

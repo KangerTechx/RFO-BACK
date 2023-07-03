@@ -46,7 +46,7 @@ export class BooksService {
       },
     });
 
-    const book = this.bookRepository.create({
+    const book = await this.bookRepository.create({
       ...createBookDto,
       compositors,
       arrangors,
@@ -66,6 +66,7 @@ export class BooksService {
         library: true,
         parts: true,
       },
+      order: { name: 'ASC' },
     });
   }
 
@@ -99,14 +100,12 @@ export class BooksService {
     const arrangors =
       updateBookDto.arrangors &&
       (await Promise.all(
-        updateBookDto.arrangors.map((name) => 
-        this.preloadArrangorByName(name)),
+        updateBookDto.arrangors.map((name) => this.preloadArrangorByName(name)),
       ));
     const styles =
       updateBookDto.styles &&
       (await Promise.all(
-        updateBookDto.styles.map((name) => 
-        this.preloadStyleByName(name)),
+        updateBookDto.styles.map((name) => this.preloadStyleByName(name)),
       ));
 
     const book = await this.bookRepository.preload({

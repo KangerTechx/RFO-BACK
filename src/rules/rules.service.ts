@@ -22,6 +22,7 @@ export class RulesService {
       relations: {
         users: true,
       },
+      order: { id: 'ASC' },
     });
   }
 

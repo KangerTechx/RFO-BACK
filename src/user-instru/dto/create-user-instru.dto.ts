@@ -1,4 +1,4 @@
-import { IsEnum, IsString } from 'class-validator';
+import { IsEnum } from 'class-validator';
 
 enum CatInstru {
   ORCHESTRE = 'Orchestre',
@@ -7,9 +7,6 @@ enum CatInstru {
 }
 
 export class CreateUserInstruDto {
-  @IsString()
-  readonly instrument: string[];
-
   @IsEnum(CatInstru)
   readonly category: CatInstru;
 }
