@@ -5,6 +5,9 @@ export class CreatePartDto {
   @IsNotEmpty()
   readonly pdfName: string;
 
+  @IsString()
+  readonly ref: string;
+
   @IsString({ each: true })
   readonly instruments: string[];
 }

@@ -7,7 +7,6 @@ global['fetch'] = require('node-fetch');
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api/v1');
-
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -17,6 +16,7 @@ async function bootstrap() {
   );
   app.use(json({ limit: '50mb' }));
   app.enableCors();
+
   await app.listen(3080);
 }
 bootstrap();

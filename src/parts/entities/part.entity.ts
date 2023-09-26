@@ -3,6 +3,7 @@ import { Instrument } from 'src/instruments/entities/instrument.entity';
 import {
   Column,
   Entity,
+  Index,
   JoinTable,
   ManyToMany,
   ManyToOne,
@@ -14,8 +15,19 @@ export class Part {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Index({ fulltext: true })
   @Column()
   pdfName: string;
+
+  @Column()
+  key: string;
+
+  @Column()
+  url: string;
+
+  @Index()
+  @Column()
+  ref: string;
 
   @JoinTable()
   @ManyToOne((type) => Book, (book) => book.parts)
